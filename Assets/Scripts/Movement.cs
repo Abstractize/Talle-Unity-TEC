@@ -7,16 +7,14 @@ public class Movement : MonoBehaviour {
     public float speed = 1;
     //Salto
     public float jumpVelocity = 10;
-    public float gravityScale = 1;
 
-    CharacterController controller;
+    Rigidbody rb;
 
-    //Movimiento
-    Vector3 moveDirection;
+    
 
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Use this for initialization
@@ -29,17 +27,34 @@ public class Movement : MonoBehaviour {
 	void FixedUpdate () {
 
         AxisInput();
-        controller.Move(moveDirection*Time.deltaTime);
-
     }
 
     void AxisInput()
     {
-        moveDirection = new Vector3(Input.GetAxis("Horizontal") * speed, 0f, Input.GetAxis("Vertical") * speed);
-        if (Input.GetButtonDown("Jump"))
+        //Forward
+        if (Input.GetKey(KeyCode.W))
         {
-            moveDirection.y = jumpVelocity;
+            rb.MovePosition(rb.position + Vector3.forward * speed);
         }
-        moveDirection.y = moveDirection.y + (Physics.gravity.y *  gravityScale);
+        //Back
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.MovePosition(rb.position + Vector3.back * speed);
+        }
+        //Left
+        if (Input.GetKey(KeyCode.A))
+        {
+            rb.MovePosition(rb.position + Vector3.left * speed);
+        }
+        //Right
+        if (Input.GetKey(KeyCode.D))
+        {
+            rb.MovePosition(rb.position + Vector3.right * speed);
+        }
+        //Front
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, rb.velocity.z);
+        }
     }
 }
