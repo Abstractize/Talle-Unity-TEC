@@ -10,17 +10,17 @@ public class Movement : MonoBehaviour {
 
     Rigidbody rb;
 
-    
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision);
+    }
     // Use this for initialization
     void Start () {
-        
-        
+
     }
 	
 	// Update is called once per frame
@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour {
 
         AxisInput();
     }
-
+    //Teclado
     void AxisInput()
     {
         //Forward
