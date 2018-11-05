@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff58bbaa10dd1aa429e26c8b3bb51d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boulder: {fileID: 1912634122361596, guid: 35cfec204fa434d4485b955990c1edec, type: 2}
+  Boulder: {fileID: 1256885351721920, guid: 35cfec204fa434d4485b955990c1edec, type: 2}
 --- !u!1001 &916079495
 Prefab:
   m_ObjectHideFlags: 0
@@ -263,6 +263,11 @@ Prefab:
       propertyPath: m_TagString
       value: Goal
       objectReference: {fileID: 0}
+    - target: {fileID: 23244775425401006, guid: 21aceb4c3dbc12048a4bee05ac062c5a,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 108ebc613dca7a743982fa970d7f0d87, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21aceb4c3dbc12048a4bee05ac062c5a, type: 2}
   m_IsPrefabAsset: 0
