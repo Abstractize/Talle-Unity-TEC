@@ -9,14 +9,11 @@ public class Movement : MonoBehaviour {
     public float jumpVelocity = 10;
 
     Rigidbody rb;
+    bool goal = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision);
     }
     // Use this for initialization
     void Start () {
@@ -28,6 +25,29 @@ public class Movement : MonoBehaviour {
 
         AxisInput();
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Enemy"))
+        {
+            rb.transform.position = Vector3.zero;
+        }
+
+        if (collision.gameObject.tag.Equals("Goal"))
+        {
+            goal = true;
+        }
+    }
+
+    void OnGUI()
+    {
+        if (goal)
+        {
+            GUI.Label(new Rect(Screen.width / 2, (Screen.height / 2) - 80, 200f, 200f), "WINNER");
+
+        }
+    }
+
     //Teclado
     void AxisInput()
     {
@@ -56,5 +76,10 @@ public class Movement : MonoBehaviour {
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, rb.velocity.z);
         }
+    }
+
+    IEnumerator Waiter()
+    {
+        yield return new WaitForSeconds(5);
     }
 }
