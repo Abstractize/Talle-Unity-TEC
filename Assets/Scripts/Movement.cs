@@ -49,6 +49,7 @@ public class Movement : MonoBehaviour {
     }
 
     //Teclado
+    //Otra Manera de Hacerlo
     void AxisInput()
     {
         //Forward
@@ -76,10 +77,5 @@ public class Movement : MonoBehaviour {
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, rb.velocity.z);
         }
-    }
-
-    IEnumerator Waiter()
-    {
-        yield return new WaitForSeconds(5);
     }
 }
