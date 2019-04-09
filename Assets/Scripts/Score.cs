@@ -14,10 +14,14 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Text>().text = "Score:" + score;
+        GetComponent<Text>().text = "Score: " + score;
     }
     public void AddScore()
     {
         score += 100;
+    }
+    public void ResetScore()
+    {
+        score = 0;
     }
 }
