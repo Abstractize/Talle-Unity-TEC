@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour {
 
     public float speed = 1;
     //Salto
     public float jumpVelocity = 10;
+    //Nivel
+    int level = 1;
 
     Rigidbody rb;
-    bool goal = false;
+
 
     private void Awake()
     {
@@ -35,19 +38,16 @@ public class Movement : MonoBehaviour {
 
         if (collision.gameObject.tag.Equals("Goal"))
         {
-            goal = true;
+            SceneManager.LoadScene(level++);
         }
     }
-
-    void OnGUI()
+    private void OnTriggerEnter(Collider other)
     {
-        if (goal)
+        if (other.gameObject.tag.Equals("Enemy"))
         {
-            GUI.Label(new Rect(Screen.width / 2, (Screen.height / 2) - 80, 200f, 200f), "WINNER");
-
+            AddScore();                
         }
     }
-
     //Teclado
     //Otra Manera de Hacerlo
     void AxisInput()
@@ -77,5 +77,10 @@ public class Movement : MonoBehaviour {
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, rb.velocity.z);
         }
+    }
+    //Score
+    void AddScore()
+    {
+       GameObject.FindGameObjectWithTag("Text").GetComponent<Score>().AddScore();
     }
 }
