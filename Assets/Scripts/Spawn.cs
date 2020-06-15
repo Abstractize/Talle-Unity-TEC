@@ -33,8 +33,8 @@ public class Spawn : MonoBehaviour {
 
         Physics.IgnoreCollision(instance2.GetComponent<Collider>(), instance3.GetComponent<Collider>());
 
-        Destroy(instance, 10f);
-        Destroy(instance2, 10f);
-        Destroy(instance3, 10f);
+        Destroy(instance, 7f);
+        Destroy(instance2, 7f);
+        Destroy(instance3, 7f);
     }
 }

@@ -12,6 +12,10 @@ public class Movement : MonoBehaviour {
     int level = 0;
     //Rigidbody
     Rigidbody rb;
+    float tempX = 0; //1 y -1
+    float tempY = 0; //1 y -1 
+    [SerializeField] bool isGrounded = true;
+        
 
     private void Awake()
     {
@@ -22,11 +26,20 @@ public class Movement : MonoBehaviour {
     {
 
     }
-	
+	void Update()
+    {
+        tempX = Input.GetAxis(Actions.Horizontal.ToString()); //1 y -1
+        tempY = Input.GetAxis(Actions.Vertical.ToString()); //1 y -1 
+        if (Input.GetButtonDown(Actions.Jump.ToString())  && isGrounded)
+        {
+            rb.velocity = new Vector3(rb.velocity.x,jumpVelocity,rb.velocity.z);
+        }
+    }
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        AxisInput();
+        Vector3 axis = new Vector3(tempX, 0 ,tempY);
+        rb.MovePosition(rb.position + axis * speed);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -51,37 +64,6 @@ public class Movement : MonoBehaviour {
             AddScore();
         }
     }
-    //Teclado
-    //Otra Manera de Hacerlo
-    void AxisInput()
-    {
-        //Forward
-        if (Input.GetKey(KeyCode.W))
-        {
-            rb.MovePosition(rb.position + Vector3.forward * speed);
-        }
-        //Back
-        if (Input.GetKey(KeyCode.S))
-        {
-            rb.MovePosition(rb.position + Vector3.back * speed);
-        }
-        //Left
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.MovePosition(rb.position + Vector3.left * speed);
-        }
-        //Right
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb.MovePosition(rb.position + Vector3.right * speed);
-        }
-        //Front
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //Ojo
-            rb.velocity = new Vector3(rb.velocity.x, jumpVelocity, rb.velocity.z);
-        }
-    }
     //Score
     void AddScore()
     {
@@ -90,5 +72,9 @@ public class Movement : MonoBehaviour {
     void ResetScore()
     {
         GameObject.FindGameObjectWithTag("Text").GetComponent<Score>().ResetScore();
+    }
+    public enum Actions
+    {
+        Horizontal, Vertical, Jump
     }
 }
