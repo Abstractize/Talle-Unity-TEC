@@ -11,15 +11,17 @@ public class Movement : MonoBehaviour {
     //Nivel
     int level = 0;
     //Rigidbody
-    Rigidbody rb;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] Animator animator;
     float tempX = 0; //1 y -1
     float tempY = 0; //1 y -1 
+    Vector3 axis;
     [SerializeField] bool isGrounded = true;
         
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+
     }
     // Use this for initialization
     void Start ()
@@ -32,18 +34,23 @@ public class Movement : MonoBehaviour {
         tempY = Input.GetAxis(Actions.Vertical.ToString()); //1 y -1 
         if (Input.GetButtonDown(Actions.Jump.ToString())  && isGrounded)
         {
+            animator.SetTrigger("Jump");
             isGrounded = false;
             rb.velocity = new Vector3(rb.velocity.x,jumpVelocity,rb.velocity.z);
         }
+        //Animacion
+        
+        animator.SetFloat("X&Z",axis.magnitude);
+        animator.SetBool("NoGrounded",!isGrounded);
     }
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        Vector3 axis = new Vector3(tempX, 0 ,tempY);
+        axis = new Vector3(tempX, 0 ,tempY);
         rb.MovePosition(rb.position + axis * speed);
         
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         //Devuelve al punto inicial y elimina el puntaje
@@ -55,7 +62,7 @@ public class Movement : MonoBehaviour {
         //Paso de escena
         if (collision.gameObject.tag.Equals("Goal"))
         {
-            SceneManager.LoadScene(++level);
+            animator.SetTrigger("Win");
         }
         if(collision.gameObject.layer.Equals(9))
             isGrounded = true;
@@ -80,5 +87,9 @@ public class Movement : MonoBehaviour {
     public enum Actions
     {
         Horizontal, Vertical, Jump
+    }
+    public void Next()
+    {
+        SceneManager.LoadScene(++level);
     }
 }
