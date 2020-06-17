@@ -32,6 +32,7 @@ public class Movement : MonoBehaviour {
         tempY = Input.GetAxis(Actions.Vertical.ToString()); //1 y -1 
         if (Input.GetButtonDown(Actions.Jump.ToString())  && isGrounded)
         {
+            isGrounded = false;
             rb.velocity = new Vector3(rb.velocity.x,jumpVelocity,rb.velocity.z);
         }
     }
@@ -40,6 +41,7 @@ public class Movement : MonoBehaviour {
     {
         Vector3 axis = new Vector3(tempX, 0 ,tempY);
         rb.MovePosition(rb.position + axis * speed);
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -55,6 +57,8 @@ public class Movement : MonoBehaviour {
         {
             SceneManager.LoadScene(++level);
         }
+        if(collision.gameObject.layer.Equals(9))
+            isGrounded = true;
     }
     //Agrega Score cuando el trigger con enemigos
     private void OnTriggerEnter(Collider other)
